@@ -556,6 +556,18 @@ open class MultipartFormData {
 
         return headers
     }
+    
+    // MARK: Public function to add params to Content Disposition
+    func addParamToContentHeader(params: [String: String]) -> [String: String] {
+        var contentHeader = contentHeaders(withName: "filename[]")
+        var disposition = contentHeader["Content-Disposition"]
+    
+        for item in params {
+            disposition! += "; \(item.key)=\"\(item.value)\""
+        }
+        contentHeader["Content-Disposition"] = disposition
+        return contentHeader
+    }
 
     // MARK: - Private - Boundary Encoding
 
